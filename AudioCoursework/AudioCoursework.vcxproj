@@ -92,7 +92,11 @@
     <ClCompile Include="Framework\XACore.cpp" />
     <ClCompile Include="Framework\XASound.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Main_AudioCoursework.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\GameTimer.h" />
@@ -108,6 +112,10 @@
     <ClInclude Include="Framework\XACore.hpp" />
     <ClInclude Include="Framework\XASound.hpp" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

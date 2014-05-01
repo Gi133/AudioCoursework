@@ -7,6 +7,9 @@ using std::unique_ptr;
 #include "IState.hpp"
 using AllanMilne::IState;
 
+#include "World.h"
+#include "Player.h"
+
 //	BEGIN CLASS
 class GameController :public IState
 {
@@ -23,6 +26,9 @@ public:
 
 private:
 	void DisplayInstructions();
-	void ProcessControls();
+
+	unique_ptr<World> world;
+	unique_ptr<Player> player;
+	unsigned int turnCounter;
 };
 //	END CLASS
