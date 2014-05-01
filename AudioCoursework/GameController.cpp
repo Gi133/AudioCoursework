@@ -11,11 +11,12 @@ using std::endl;
 #include "XACore.hpp"
 using AllanMilne::Audio::XACore;
 
-GameController::GameController()
+GameController::GameController() : MAX_MONSTER_SPAWN_RANGE(20.0f), MIN_MONSTER_SPAWN_RANGE(10.0f)
 {
 	// Initialize points to "nullpointer and whatnot.
 	world = nullptr;
 	player = nullptr;
+	monster = nullptr;
 
 	turnCounter = 0;
 } // End of Constructor function
@@ -25,6 +26,7 @@ GameController::~GameController()
 	// Call Stop function on all relevant game objects and deallocate anything that requires deallocation.
 	world->Stop();
 	player->Stop();
+	monster->Stop();
 } // End of Destructor function
 
 bool GameController::Initialize(HWND aWindow)
@@ -32,16 +34,25 @@ bool GameController::Initialize(HWND aWindow)
 	if (XACore::GetStatus() != XACore::OK) // Check if something went horribly wrong with XACore.
 		return false;
 
+	// Figure out the starting position for the monster.
+	// NOTE: THE FUNCTION WAS DESIGNED TO BE USED WITH FLOATS FOR ANOTHER COURSEWORK PROJECT SO CAST THE RETURN AS AN INT.
+	int monsterPositionX = static_cast<int>(RandomInRange(MIN_MONSTER_SPAWN_RANGE, MAX_MONSTER_SPAWN_RANGE));
+	int monsterPositionY = static_cast<int>(RandomInRange(MIN_MONSTER_SPAWN_RANGE, MAX_MONSTER_SPAWN_RANGE));
+
 	// Initialize the game objects.
 	world.reset(new World);
 	player.reset(new Player);
+	monster.reset(new Monster(monsterPositionX, monsterPositionY));
 
-	// Initialize any other variables that may be required.
+	// Load Ambient Audio
 	world->LoadAmbientSound("Audio/AmbientAudio.wav");
 
+	// Load Player Audio
 	player->LoadBreathingAudio("Audio/PlayerBreathing.wav");
 	player->LoadWalkingAudio("Audio/PlayerWalking.wav");
 	player->LoadDeathAudio("Audio/PlayerDeath.wav");
+
+	// Load Monster Audio
 
 	return true;
 } // End of Initialize function
@@ -51,6 +62,7 @@ bool GameController::Setup()
 	DisplayInstructions();
 	world->Start();
 	player->Start();
+	monster->Start();
 
 	return true;
 } // End of Setup function
@@ -60,10 +72,15 @@ bool GameController::ProcessFrame(const float deltaTime)
 	if (GetAsyncKeyState('I') & 0x0001) 
 		DisplayInstructions();
 
-	// Player Turn.
-	player->ProcessTurn(deltaTime);
+	if (player->GetPosition() != monster->GetPosition())
+	{
+		// Player Turn.
+		player->ProcessTurn(deltaTime);
 
-	// Monster Turn.
+		// Monster Turn.
+		monster->ProcessTurn(deltaTime, player->GetPosition(), player->GetHeading());
+	}
+	
 
 	turnCounter++;
 	return true;
@@ -85,4 +102,10 @@ void GameController::DisplayInstructions()
 	msg << " ESC:		Exit the Application. " << endl << endl;
 	const std::string msgStr = msg.str();
 	MessageBox(NULL, msgStr.c_str(), TEXT("Monster Evade"), MB_OK | MB_ICONINFORMATION);
+}
+
+float GameController::RandomInRange(const float min, const float max)
+{
+	float randomNumber = static_cast<float>(rand()) / static_cast<float>(RAND_MAX); // Random number between 0 - 1.
+	return ((randomNumber * (max - min)) + min);
 }
