@@ -3,8 +3,8 @@
 
 Monster::Monster(int positionX, int positionY)
 {
-	position.x = positionX;
-	position.y = positionY;
+	position.x = static_cast<float>(positionX);
+	position.y = static_cast<float>(positionY);
 }
 
 

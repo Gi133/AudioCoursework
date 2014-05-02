@@ -8,6 +8,27 @@ GameObject::GameObject()
 	deathSound = nullptr;
 	heading = North;
 	walkingSpeed = 1.0f;
+
+	// Setup the heading vectors
+	// North
+	headingVectors[0].x = 0.0f;
+	headingVectors[0].y = 0.0f;
+	headingVectors[0].z = 1.0f;
+
+	// South
+	headingVectors[1].x = 0.0f;
+	headingVectors[1].y = 0.0f;
+	headingVectors[1].z = -1.0f;
+
+	// East
+	headingVectors[2].x = 1.0f;
+	headingVectors[2].y = 0.0f;
+	headingVectors[2].z = 0.0f;
+
+	// West
+	headingVectors[3].x = -1.0f;
+	headingVectors[3].y = 0.0f;
+	headingVectors[3].z = 0.0f;
 }
 
 GameObject::~GameObject()
@@ -107,4 +128,9 @@ void GameObject::TurnRight()
 void GameObject::LoadBreathingAudio(std::string filePath)
 {
 	breathingSound.reset(new XASound(filePath));
+}
+
+X3DAUDIO_VECTOR GameObject::ConvertHeadingToVector()
+{
+	return headingVectors[heading];
 }

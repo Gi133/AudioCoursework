@@ -40,8 +40,10 @@ protected:
 	void MoveForward();
 	void TurnLeft();
 	void TurnRight();
+	X3DAUDIO_VECTOR ConvertHeadingToVector();
 
 	D3DXVECTOR2 position;
+	X3DAUDIO_VECTOR headingVectors[4];
 	unique_ptr<XASound> walkingSound, breathingSound, deathSound;
 	HeadingDirection heading;
 	float walkingSpeed;

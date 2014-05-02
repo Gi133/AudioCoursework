@@ -75,7 +75,7 @@ bool GameController::ProcessFrame(const float deltaTime)
 	if (player->GetPosition() != monster->GetPosition())
 	{
 		// Player Turn.
-		player->ProcessTurn(deltaTime);
+		player->ProcessTurn(deltaTime, monster->GetPosition());
 
 		// Monster Turn.
 		monster->ProcessTurn(deltaTime, player->GetPosition(), player->GetHeading());

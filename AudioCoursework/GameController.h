@@ -28,7 +28,7 @@ public:
 private:
 	void DisplayInstructions();
 	float RandomInRange(const float min, const float max);
-	D3DXVECTOR2 monsterPosition
+	D3DXVECTOR2 monsterPosition;
 
 	const float MAX_MONSTER_SPAWN_RANGE, MIN_MONSTER_SPAWN_RANGE;
 
