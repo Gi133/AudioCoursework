@@ -8,6 +8,7 @@ GameObject::GameObject()
 	deathSound = nullptr;
 	heading = North;
 	walkingSpeed = 1.0f;
+	alive = true;
 
 	// Setup the heading vectors
 	// North
@@ -35,10 +36,10 @@ GameObject::~GameObject()
 {
 	if (walkingSound->IsValid())
 		walkingSound->Stop();
-		
+
 	if (breathingSound->IsValid())
 		breathingSound->Stop();
-	
+
 	if (deathSound->IsValid())
 		deathSound->Stop();
 }
@@ -133,4 +134,17 @@ void GameObject::LoadBreathingAudio(std::string filePath)
 X3DAUDIO_VECTOR GameObject::ConvertHeadingToVector()
 {
 	return headingVectors[heading];
+}
+
+bool GameObject::TimerCheck(float& timer, const float dt, const float time)
+{
+	timer += dt;
+
+	if (timer >= time)
+	{
+		timer = 0;
+		return true;
+	}
+	else
+		return false;
 }

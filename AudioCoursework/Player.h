@@ -7,6 +7,8 @@ public:
 	void Start(); // Override GameObject Start function.
 	void ProcessTurn(const float dt, const D3DXVECTOR2 monsterPosition); // Override GameObject ProcessTurn function
 
+	X3DAUDIO_LISTENER* GetAudioListener();
+
 	Player();
 	virtual ~Player();
 
@@ -21,4 +23,3 @@ private:
 	const float BREATHING_MAX_DELAY, BREATHING_MIN_DELAY, BREATHING_MAX_DISTANCE;
 	X3DAUDIO_LISTENER audioListener;
 };
-

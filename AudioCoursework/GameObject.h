@@ -8,6 +8,8 @@
 using std::unique_ptr;
 
 #include "XASound.hpp"
+#include "XACore.hpp"
+using AllanMilne::Audio::XACore;
 using AllanMilne::Audio::XASound;
 
 class GameObject
@@ -23,6 +25,7 @@ public:
 	void SetHeading(HeadingDirection newHeading){ heading = newHeading; } // Used to force the heading of the game object.
 	HeadingDirection GetHeading(){ return heading; }
 	D3DXVECTOR2 GetPosition(){ return position; }
+	bool GetAlive(){ return alive; }
 
 	// File loading
 	void LoadWalkingAudio(std::string filePath){ walkingSound.reset(new XASound(filePath)); }
@@ -42,10 +45,12 @@ protected:
 	void TurnRight();
 	X3DAUDIO_VECTOR ConvertHeadingToVector();
 
+	bool TimerCheck(float& timer, const float dt, const float time); // Function that takes in a timer variable, deltaTime and a time to check against.
+
 	D3DXVECTOR2 position;
 	X3DAUDIO_VECTOR headingVectors[4];
 	unique_ptr<XASound> walkingSound, breathingSound, deathSound;
 	HeadingDirection heading;
 	float walkingSpeed;
+	bool alive; // If the object is alive/active in the scene.
 };
-

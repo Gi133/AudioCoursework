@@ -1,16 +1,5 @@
 #include "GameController.h"
 
-// Windows includes
-#include <memory>
-#include <string>
-#include <sstream>
-#include <iostream>
-using std::endl;
-
-// Framework includes
-#include "XACore.hpp"
-using AllanMilne::Audio::XACore;
-
 GameController::GameController() : MAX_MONSTER_SPAWN_RANGE(20.0f), MIN_MONSTER_SPAWN_RANGE(10.0f)
 {
 	// Initialize points to "nullpointer and whatnot.
@@ -18,7 +7,7 @@ GameController::GameController() : MAX_MONSTER_SPAWN_RANGE(20.0f), MIN_MONSTER_S
 	player = nullptr;
 	monster = nullptr;
 
-	turnCounter = 0;
+	srand(static_cast<unsigned int>(time(NULL)));
 } // End of Constructor function
 
 GameController::~GameController()
@@ -39,6 +28,10 @@ bool GameController::Initialize(HWND aWindow)
 	int monsterPositionX = static_cast<int>(RandomInRange(MIN_MONSTER_SPAWN_RANGE, MAX_MONSTER_SPAWN_RANGE));
 	int monsterPositionY = static_cast<int>(RandomInRange(MIN_MONSTER_SPAWN_RANGE, MAX_MONSTER_SPAWN_RANGE));
 
+	// The variables above need to be randomized more so that the monster doesn't start in front and to the right of the player all the time.
+	RandomSign(monsterPositionX);
+	RandomSign(monsterPositionY);
+
 	// Initialize the game objects.
 	world.reset(new World);
 	player.reset(new Player);
@@ -53,6 +46,9 @@ bool GameController::Initialize(HWND aWindow)
 	player->LoadDeathAudio("Audio/PlayerDeath.wav");
 
 	// Load Monster Audio
+	monster->LoadBreathingAudio("Audio/MonsterBreathing.wav");
+	monster->LoadWalkingAudio("Audio/MonsterWalking.wav");
+	monster->LoadDeathAudio("Audio/MonsterDeath.wav");
 
 	return true;
 } // End of Initialize function
@@ -69,20 +65,21 @@ bool GameController::Setup()
 
 bool GameController::ProcessFrame(const float deltaTime)
 {
-	if (GetAsyncKeyState('I') & 0x0001) 
+	if (GetAsyncKeyState('I') & 0x0001)
 		DisplayInstructions();
 
-	if (player->GetPosition() != monster->GetPosition())
+	// If monster is still alive then go on with the game.
+	if (monster->GetAlive() && player->GetAlive())
 	{
 		// Player Turn.
 		player->ProcessTurn(deltaTime, monster->GetPosition());
 
 		// Monster Turn.
-		monster->ProcessTurn(deltaTime, player->GetPosition(), player->GetHeading());
+		monster->ProcessTurn(deltaTime, player->GetPosition(), player->GetAudioListener());
 	}
-	
+	else
+		return false;
 
-	turnCounter++;
 	return true;
 } // End of ProcessFrame function
 
@@ -108,4 +105,14 @@ float GameController::RandomInRange(const float min, const float max)
 {
 	float randomNumber = static_cast<float>(rand()) / static_cast<float>(RAND_MAX); // Random number between 0 - 1.
 	return ((randomNumber * (max - min)) + min);
+}
+
+void GameController::RandomSign(int& number)
+{
+	int randNumber = (rand() % 100) + 1; // 1 to 100
+
+	if (randNumber >= 50)
+		number *= 1;
+	else
+		number *= -1;
 }

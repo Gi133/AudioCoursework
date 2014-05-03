@@ -1,6 +1,5 @@
 #include "World.h"
 
-
 World::World()
 {
 	ambientAudio = nullptr;
@@ -17,6 +16,7 @@ void World::Start()
 	if (ambientAudio->IsValid())
 	{
 		ambientAudio->SetLooped(true);
+		ambientAudio->AdjustVolume(-10.0f);
 		ambientAudio->Play();
 	}
 }

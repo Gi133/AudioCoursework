@@ -47,7 +47,7 @@ namespace
 }
 
 //=== Application entry point. ===
-int WINAPI WinMain(HINSTANCE hinstance,	HINSTANCE prevInstance,	PSTR cmdLine, int showCmd)
+int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)
 {
 	std::unique_ptr<WinCore> windowApp;
 	std::unique_ptr<IState> frameProcessor;
@@ -55,7 +55,7 @@ int WINAPI WinMain(HINSTANCE hinstance,	HINSTANCE prevInstance,	PSTR cmdLine, in
 	//--- Create the singleton XACore object that will initialize XAudio2 and X3DAudio.
 	//--- Must do this before creating/initializing other objects since these may require XAudio2 functionality in creating sounds, etc.
 	XACore::CreateInstance();
-	if (XACore::GetStatus() != XACore::OK) 
+	if (XACore::GetStatus() != XACore::OK)
 	{
 		MessageBox(NULL, TEXT("Error initializing XAudio2 - application aborted."), TEXT("Main Application"), MB_OK | MB_ICONERROR);
 		return 0;
@@ -70,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hinstance,	HINSTANCE prevInstance,	PSTR cmdLine, in
 	//--- Initialize the WinCore object including creating the application window;
 	//--- this will also call the IState::Initialize() method of the frame processor.
 	bool ok = windowApp->Initialize(windowName, windowWidth, windowHeight, windowFullScreen, hinstance);
-	if (!ok) 
+	if (!ok)
 	{
 		MessageBox(NULL, TEXT("Error occurred while initializing WinCore; application aborted."), TEXT(" Main Application"), MB_OK | MB_ICONERROR);
 		return 0;

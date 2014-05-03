@@ -2,3 +2,6 @@ Ambient Audio: Horror Ambience 15 by klankbeeld (http://www.freesound.org/people
 Player Breathing: http://www.soundsnap.com/node/110663
 Player Walking: http://www.freesound.org/people/movingplaid/sounds/76189/
 Player Death: http://www.freesound.org/people/grunz/sounds/104695/
+Monster Breathing: http://www.freesound.org/people/vartioh/sounds/128238/
+Monster Step: http://www.freesound.org/people/pgi/sounds/213041/
+Monster Death: http://www.freesound.org/people/vartioh/sounds/128237/

@@ -22,4 +22,3 @@ public:
 private:
 	unique_ptr<XASound> ambientAudio; // Ambient audio/music for the world.
 };
-

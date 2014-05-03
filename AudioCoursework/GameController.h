@@ -2,10 +2,17 @@
 
 // Includes.
 #include <memory>
+#include <time.h>
+#include <string>
+#include <sstream>
+#include <iostream>
 using std::unique_ptr;
+using std::endl;
 
 #include "IState.hpp"
+#include "XACore.hpp"
 using AllanMilne::IState;
+using AllanMilne::Audio::XACore;
 
 #include "World.h"
 #include "Player.h"
@@ -27,7 +34,8 @@ public:
 
 private:
 	void DisplayInstructions();
-	float RandomInRange(const float min, const float max);
+	float RandomInRange(const float min, const float max); // Function to generate a number between a minimum and a maximum value provided.
+	void RandomSign(int& number); // Function to randomize the sign of a number (positive or negative).
 	D3DXVECTOR2 monsterPosition;
 
 	const float MAX_MONSTER_SPAWN_RANGE, MIN_MONSTER_SPAWN_RANGE;
@@ -35,6 +43,5 @@ private:
 	unique_ptr<World> world;
 	unique_ptr<Player> player;
 	unique_ptr<Monster> monster;
-	unsigned int turnCounter;
 };
 //	END CLASS

@@ -1,6 +1,5 @@
 #include "Player.h"
 
-
 Player::Player() : BREATHING_MAX_DELAY(5.0f), BREATHING_MIN_DELAY(2.0f), BREATHING_MAX_DISTANCE(20.0f)
 {
 	// Setup the listener.
@@ -22,7 +21,6 @@ Player::Player() : BREATHING_MAX_DELAY(5.0f), BREATHING_MIN_DELAY(2.0f), BREATHI
 	breathingDelay = BREATHING_MAX_DELAY;
 }
 
-
 Player::~Player()
 {
 }
@@ -30,27 +28,41 @@ Player::~Player()
 void Player::Start()
 {
 	breathingSound->SetLooped(false);
-	breathingSound->SetVolume(0.5f);
+	breathingSound->AdjustVolume(-20.0f);
 	breathingSound->Play();
+
+	walkingSound->AdjustVolume(-12.0f);
 }
 
 void Player::ProcessTurn(const float dt, const D3DXVECTOR2 monsterPosition)
 {
-	Movement();
-	UpdateBreathingDelay(monsterPosition);
-	Breathe(dt);
+	// Check if monster has caught the player.
+	if (position != monsterPosition)
+	{
+		Movement();
+		UpdateBreathingDelay(monsterPosition);
+		Breathe(dt);
+	}
+	else
+	{
+		// Monster has caught the player so play death sound and set alive state to false;
+		deathSound->Play();
+		alive = false;
+	}
 }
 
 void Player::Movement()
 {
-	if (GetAsyncKeyState(VK_UP) & 0x0001) 
+	if (GetAsyncKeyState(VK_UP) & 0x0001)
 		MoveForward();
-	
+
 	if (GetAsyncKeyState(VK_LEFT) & 0x0001)
 		TurnLeft();
-	
+
 	if (GetAsyncKeyState(VK_RIGHT) & 0x0001)
 		TurnRight();
+
+	UpdateListener();
 }
 
 void Player::Breathe(const float dt)
@@ -81,4 +93,9 @@ void Player::UpdateBreathingDelay(const D3DXVECTOR2 monsterPosition)
 		breathingDelay = BREATHING_MIN_DELAY + (distance / BREATHING_MAX_DISTANCE * BREATHING_MAX_DELAY);
 	else
 		breathingDelay = BREATHING_MAX_DELAY;
+}
+
+X3DAUDIO_LISTENER* Player::GetAudioListener()
+{
+	return &audioListener;
 }
