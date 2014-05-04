@@ -1,3 +1,13 @@
+/*
+File:	GameController.cpp
+Version:	1.0
+Date: 4th May 2013.
+Author:	Andreas Xirotyris.
+
+Description:
+Look at GameController.h for further info.
+*/
+
 #include "GameController.h"
 
 GameController::GameController() : MAX_MONSTER_SPAWN_RANGE(20.0f), MIN_MONSTER_SPAWN_RANGE(10.0f)
@@ -87,7 +97,7 @@ void GameController::Cleanup()
 {
 	world->Stop();
 	player->Stop();
-}
+} // End of Cleanup function.
 
 void GameController::DisplayInstructions()
 {
@@ -99,13 +109,13 @@ void GameController::DisplayInstructions()
 	msg << " ESC:		Exit the Application. " << endl << endl;
 	const std::string msgStr = msg.str();
 	MessageBox(NULL, msgStr.c_str(), TEXT("Monster Evade"), MB_OK | MB_ICONINFORMATION);
-}
+} // End of Display Instructions function.
 
 float GameController::RandomInRange(const float min, const float max)
 {
 	float randomNumber = static_cast<float>(rand()) / static_cast<float>(RAND_MAX); // Random number between 0 - 1.
-	return ((randomNumber * (max - min)) + min);
-}
+	return ((randomNumber * (max - min)) + min); // Return number between min and max.
+} // End of RandomInRange function.
 
 void GameController::RandomSign(int& number)
 {
@@ -115,4 +125,4 @@ void GameController::RandomSign(int& number)
 		number *= 1;
 	else
 		number *= -1;
-}
+} // End of RandomSign function.

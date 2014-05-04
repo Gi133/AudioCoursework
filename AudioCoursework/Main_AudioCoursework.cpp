@@ -4,16 +4,13 @@ Version:	1.0
 Date: 29th April 2013.
 Author:	Andreas Xirotyris.
 
-Uses:	WinCore, IState, XACore, RoomEscape.
+Uses:	windows.h, memory, WinCore.hpp, IState.hpp, XACore.hpp, WaveFileManager.hpp, GameController.hpp.
 
 Description:
 Based on Allan Milne's Main_RoomEscape.cpp version 1.0.
 
 A main code file containing the Windows application entry point
-for use with the author's windows/audio framework.
-*	See WinCore.hpp for details of the windows abstraction.
-*	see IState.hpp for details of the frame processing abstraction.
-*	see XACore.hpp for details of the audio engine abstraction.
+for use with the Allan Milne's windows/audio framework.
 
 Additional Changes from Allan Milne's original code:
 *	New variables to control the window settings, there have the prefix "window".
@@ -30,7 +27,7 @@ Additional Changes from Allan Milne's original code:
 #include "WinCore.hpp"
 #include "IState.hpp"
 #include "XACore.hpp"
-#include "waveFileManager.hpp"
+#include "WaveFileManager.hpp"
 using namespace AllanMilne;
 using namespace AllanMilne::Audio;
 

@@ -1,3 +1,17 @@
+/*
+File:	GameObject.cpp
+Version:	1.0
+Date: 4th May 2013.
+Author:	Andreas Xirotyris.
+
+Description:
+Look at GameObject.h for details on this class.
+
+Notes and Possible Optimizations:
+Turn functions are almost identical, by casting the enum into an int with some checks maybe the switch statement can be eliminated
+and instead pass in +1 or -1 as turn parameters which would then be added to the current heading's int value.
+*/
+
 #include "GameObject.h"
 
 GameObject::GameObject()
@@ -30,7 +44,7 @@ GameObject::GameObject()
 	headingVectors[3].x = -1.0f;
 	headingVectors[3].y = 0.0f;
 	headingVectors[3].z = 0.0f;
-}
+} // End of Constructor.
 
 GameObject::~GameObject()
 {
@@ -42,7 +56,7 @@ GameObject::~GameObject()
 
 	if (deathSound->IsValid())
 		deathSound->Stop();
-}
+} // End of Destructor
 
 void GameObject::Stop()
 {
@@ -99,7 +113,7 @@ void GameObject::TurnLeft()
 
 	// Play walking sound.
 	walkingSound->Play();
-}
+} // End of Turn Left function
 
 void GameObject::TurnRight()
 {
@@ -124,17 +138,7 @@ void GameObject::TurnRight()
 
 	// Play walking sound.
 	walkingSound->Play();
-}
-
-void GameObject::LoadBreathingAudio(std::string filePath)
-{
-	breathingSound.reset(new XASound(filePath));
-}
-
-X3DAUDIO_VECTOR GameObject::ConvertHeadingToVector()
-{
-	return headingVectors[heading];
-}
+} // End of Turn Right function.
 
 bool GameObject::TimerCheck(float& timer, const float dt, const float time)
 {
@@ -147,4 +151,4 @@ bool GameObject::TimerCheck(float& timer, const float dt, const float time)
 	}
 	else
 		return false;
-}
+} // End of CheckTimer function.

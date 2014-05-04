@@ -1,3 +1,13 @@
+/*
+File:	Player.cpp
+Version:	1.0
+Date: 4th May 2013.
+Author:	Andreas Xirotyris.
+
+Description:
+Look at Player.h for details on this class.
+*/
+
 #include "Player.h"
 
 Player::Player() : BREATHING_MAX_DELAY(5.0f), BREATHING_MIN_DELAY(2.0f), BREATHING_MAX_DISTANCE(20.0f)
@@ -19,20 +29,28 @@ Player::Player() : BREATHING_MAX_DELAY(5.0f), BREATHING_MIN_DELAY(2.0f), BREATHI
 	// Setup breathing values.
 	breathingTimer = 0.0f;
 	breathingDelay = BREATHING_MAX_DELAY;
-}
+} // End of Constructor
 
 Player::~Player()
 {
-}
+	if (walkingSound->IsValid())
+		walkingSound->Stop();
+
+	if (breathingSound->IsValid())
+		breathingSound->Stop();
+
+	if (deathSound->IsValid())
+		deathSound->Stop();
+} // End of Destructor
 
 void Player::Start()
 {
 	breathingSound->SetLooped(false);
-	breathingSound->AdjustVolume(-20.0f);
+	breathingSound->AdjustVolume(-5.0f);
 	breathingSound->Play();
 
-	walkingSound->AdjustVolume(-12.0f);
-}
+	walkingSound->AdjustVolume(-10.0f);
+} // End of Start function.
 
 void Player::ProcessTurn(const float dt, const D3DXVECTOR2 monsterPosition)
 {
@@ -49,7 +67,7 @@ void Player::ProcessTurn(const float dt, const D3DXVECTOR2 monsterPosition)
 		deathSound->Play();
 		alive = false;
 	}
-}
+} // End ProcessTurn function
 
 void Player::Movement()
 {
@@ -63,7 +81,7 @@ void Player::Movement()
 		TurnRight();
 
 	UpdateListener();
-}
+} // End of Movement function
 
 void Player::Breathe(const float dt)
 {
@@ -73,7 +91,7 @@ void Player::Breathe(const float dt)
 		breathingSound->Play();
 		breathingTimer = 0.0f;
 	}
-}
+} // End Breath function.
 
 void Player::UpdateListener()
 {
@@ -83,7 +101,7 @@ void Player::UpdateListener()
 	// Update position
 	audioListener.Position.x = position.x;
 	audioListener.Position.z = position.y;
-}
+} // End UpdateListener function.
 
 void Player::UpdateBreathingDelay(const D3DXVECTOR2 monsterPosition)
 {
@@ -93,9 +111,4 @@ void Player::UpdateBreathingDelay(const D3DXVECTOR2 monsterPosition)
 		breathingDelay = BREATHING_MIN_DELAY + (distance / BREATHING_MAX_DISTANCE * BREATHING_MAX_DELAY);
 	else
 		breathingDelay = BREATHING_MAX_DELAY;
-}
-
-X3DAUDIO_LISTENER* Player::GetAudioListener()
-{
-	return &audioListener;
-}
+} // End Update Breathing Delay function.

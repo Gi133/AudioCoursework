@@ -1,3 +1,17 @@
+/*
+File:	Player.h
+Version:	1.0
+Date: 4th May 2013.
+Author:	Andreas Xirotyris.
+
+Inherits:	GameObject.h
+
+Description:
+Player Class that inherits from GameObject. It contains functionality to facilitate movement in the game world as well as some delay values for the player breathing audio.
+The breathing becomes more rapid the closer the monster is to the player, for this reason the monster position is passed in every update.
+This class also contains a listener object and functionality to update the listener heading and position.
+*/
+
 #pragma once
 #include "GameObject.h"
 class Player :
@@ -7,7 +21,7 @@ public:
 	void Start(); // Override GameObject Start function.
 	void ProcessTurn(const float dt, const D3DXVECTOR2 monsterPosition); // Override GameObject ProcessTurn function
 
-	X3DAUDIO_LISTENER* GetAudioListener();
+	X3DAUDIO_LISTENER* GetAudioListener(){ return &audioListener; }
 
 	Player();
 	virtual ~Player();

@@ -1,3 +1,18 @@
+/*
+File:	World.h
+Version:	1.0
+Date: 4th May 2013.
+Author:	Andreas Xirotyris.
+
+Uses: Windows.h, X3DAudio, memory, XASound.hpp
+
+Description:
+World class, contains functionality for the ambient audio in the world.
+
+Notes:
+This class could be expanded to hold other world/level data.
+*/
+
 #pragma once
 
 // Includes.
@@ -17,7 +32,7 @@ public:
 
 	void Start(); // Start ambient audio.
 	void Stop(); // Stop ambient audio.
-	void LoadAmbientSound(std::string filePath);
+	void LoadAmbientSound(std::string filePath){ ambientAudio.reset(new XASound(filePath)); }
 
 private:
 	unique_ptr<XASound> ambientAudio; // Ambient audio/music for the world.
