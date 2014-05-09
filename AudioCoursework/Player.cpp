@@ -50,6 +50,8 @@ void Player::Start()
 	breathingSound->Play();
 
 	walkingSound->AdjustVolume(-10.0f);
+
+	deathSound->AdjustVolume(10.0f);
 } // End of Start function.
 
 void Player::ProcessTurn(const float dt, const D3DXVECTOR2 monsterPosition)

@@ -19,12 +19,12 @@ Monster::Monster(int positionX, int positionY) : MOVEMENT_TIME_DELAY(5.0f), MONS
 	movementTimer = 0.0f;
 	lifeTimer = 0.0f;
 
+	// Zero the audio emitter.
+	SecureZeroMemory(&audioEmitter, sizeof(X3DAUDIO_EMITTER));
+
 	// Update emitter position.
 	UpdateEmitterPosition();
 	audioEmitter.Position.y = 0;
-
-	// Zero the audio emitter.
-	SecureZeroMemory(&audioEmitter, sizeof(X3DAUDIO_EMITTER));
 } // End of Constructor
 
 Monster::~Monster()

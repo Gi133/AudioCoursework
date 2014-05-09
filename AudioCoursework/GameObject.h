@@ -61,9 +61,9 @@ protected:
 
 	// Function that converts the object's heading into a vector.
 	X3DAUDIO_VECTOR ConvertHeadingToVector(){ return headingVectors[heading]; }
-	
+
 	// Function that takes in a timer variable, deltaTime and a time to check against.
-	bool TimerCheck(float& timer, const float dt, const float time); 
+	bool TimerCheck(float& timer, const float dt, const float time);
 
 	D3DXVECTOR2 position;
 	X3DAUDIO_VECTOR headingVectors[4];

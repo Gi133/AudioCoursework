@@ -10,7 +10,8 @@ Look at GameController.h for further info.
 
 #include "GameController.h"
 
-GameController::GameController() : MAX_MONSTER_SPAWN_RANGE(20.0f), MIN_MONSTER_SPAWN_RANGE(10.0f)
+GameController::GameController() : MAX_MONSTER_SPAWN_RANGE(20.0f), MIN_MONSTER_SPAWN_RANGE(10.0f), MAX_MUSIC_BOX_SPAWN_RANGE(5.0f), MIN_MUSIC_BOX_SPAWN_RANGE(1.0f),
+MAX_MUSIC_BOX_START_DELAY(0.0f), MIN_MUSIC_BOX_START_DELAY(2.0f)
 {
 	// Initialize points to "nullpointer and whatnot.
 	world = nullptr;
@@ -42,13 +43,25 @@ bool GameController::Initialize(HWND aWindow)
 	RandomSign(monsterPositionX);
 	RandomSign(monsterPositionY);
 
+	// Figure out the position of the music box, as with above.
+	int musicBoxPositionX = static_cast<int>(RandomInRange(MIN_MUSIC_BOX_SPAWN_RANGE, MAX_MUSIC_BOX_SPAWN_RANGE));
+	int musicBoxPositionY = static_cast<int>(RandomInRange(MIN_MUSIC_BOX_SPAWN_RANGE, MAX_MUSIC_BOX_SPAWN_RANGE));
+
+	// The variables above need to be randomized more so that the music box doesn't always appear to the front and right of the player.
+	RandomSign(musicBoxPositionX);
+	RandomSign(musicBoxPositionY);
+
+	// Figure out the delay timer for the music box to start playing.
+	float musicBoxStartDelay = RandomInRange(MAX_MUSIC_BOX_START_DELAY, MIN_MUSIC_BOX_START_DELAY);
+
 	// Initialize the game objects.
-	world.reset(new World);
+	world.reset(new World(musicBoxPositionX, musicBoxPositionY, musicBoxStartDelay));
 	player.reset(new Player);
 	monster.reset(new Monster(monsterPositionX, monsterPositionY));
 
 	// Load Ambient Audio
 	world->LoadAmbientSound("Audio/AmbientAudio.wav");
+	world->LoadMusicBoxSound("Audio/MusicBox.wav");
 
 	// Load Player Audio
 	player->LoadBreathingAudio("Audio/PlayerBreathing.wav");
@@ -81,6 +94,8 @@ bool GameController::ProcessFrame(const float deltaTime)
 	// If monster is still alive then go on with the game.
 	if (monster->GetAlive() && player->GetAlive())
 	{
+		world->ProcessTurn(deltaTime, player->GetAudioListener());
+
 		// Player Turn.
 		player->ProcessTurn(deltaTime, monster->GetPosition());
 
@@ -88,7 +103,9 @@ bool GameController::ProcessFrame(const float deltaTime)
 		monster->ProcessTurn(deltaTime, player->GetPosition(), player->GetAudioListener());
 	}
 	else
-		return false;
+	{
+		// Game has finished, go into fail state.
+	}
 
 	return true;
 } // End of ProcessFrame function
