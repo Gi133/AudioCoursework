@@ -17,9 +17,11 @@ and instead pass in +1 or -1 as turn parameters which would then be added to the
 GameObject::GameObject()
 {
 	position.x = position.y = 0;
+
 	walkingSound = nullptr;
 	breathingSound = nullptr;
 	deathSound = nullptr;
+
 	heading = North;
 	walkingSpeed = 1.0f;
 	alive = true;

@@ -25,6 +25,7 @@ Monster::Monster(int positionX, int positionY) : MOVEMENT_TIME_DELAY(5.0f), MONS
 	// Update emitter position.
 	UpdateEmitterPosition();
 	audioEmitter.Position.y = 0;
+	audioEmitter.ChannelCount = 1;
 } // End of Constructor
 
 Monster::~Monster()
@@ -127,24 +128,18 @@ void Monster::ApplySoundEffects(const X3DAUDIO_LISTENER* listener)
 void Monster::Walking3DEffect(const X3DAUDIO_LISTENER* listener)
 {
 	// Apply 3D effect to walking sound.
-	walkingSound->GetSourceVoice()->GetVoiceDetails(&details);
-	audioEmitter.ChannelCount = details.InputChannels;
 	XACore::GetInstance()->Apply3D(walkingSound->GetSourceVoice(), &audioEmitter, listener, X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_LPF_DIRECT);
 } // End of Walking3DEffect function.
 
 void Monster::Breathing3DEffect(const X3DAUDIO_LISTENER* listener)
 {
 	// Apply 3D effect to breathing sound.
-	breathingSound->GetSourceVoice()->GetVoiceDetails(&details);
-	audioEmitter.ChannelCount = details.InputChannels;
 	XACore::GetInstance()->Apply3D(breathingSound->GetSourceVoice(), &audioEmitter, listener, X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_LPF_DIRECT);
 } // End of Breathing3DEffect function.
 
 void Monster::Death3DEffect(const X3DAUDIO_LISTENER* listener)
 {
 	// Apply 3D effect to death sound.
-	deathSound->GetSourceVoice()->GetVoiceDetails(&details);
-	audioEmitter.ChannelCount = details.InputChannels;
 	XACore::GetInstance()->Apply3D(deathSound->GetSourceVoice(), &audioEmitter, listener, X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_LPF_DIRECT);
 } // End of Death3DEffect function.
 

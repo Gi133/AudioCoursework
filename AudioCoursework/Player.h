@@ -27,7 +27,6 @@ public:
 	virtual ~Player();
 
 private:
-	void Breathe(const float dt); // Breathing function, takes in the deltaTime and checks if it's time for for the player to breathe.
 	void Movement(); // Move function, essentially checks controls and moves or turns the player.
 	void UpdateListener(); // Function to update the listener position and orientation.
 	void UpdateBreathingDelay(const D3DXVECTOR2 monsterPosition);

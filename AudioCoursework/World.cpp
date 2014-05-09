@@ -1,11 +1,14 @@
 /*
 File:	World.cpp
-Version:	1.0
-Date: 4th May 2013.
+Version:	1.1
+Date: 9th May 2013.
 Author:	Andreas Xirotyris.
 
 Description:
 Look at World.h for details
+
+Change log:
+*	Added static audio emitter (aka Music Box)
 */
 
 #include "World.h"
@@ -26,6 +29,7 @@ World::World(const int musicBoxPositionX, const int musicBoxPositionY, const flo
 	audioEmitter.Position.y = 0.0f;
 	audioEmitter.Position.z = static_cast<float>(musicBoxPositionY);
 	audioEmitter.CurveDistanceScaler = 1.0f;
+	audioEmitter.ChannelCount = 1;
 } // End of constructor.
 
 World::~World()
@@ -41,7 +45,7 @@ void World::Start()
 	if (ambientAudio->IsValid())
 	{
 		ambientAudio->SetLooped(true);
-		ambientAudio->AdjustVolume(-10.0f);
+		ambientAudio->AdjustVolume(-5.0f);
 		ambientAudio->Play();
 	}
 
@@ -71,8 +75,6 @@ void World::ProcessTurn(const float dt, const X3DAUDIO_LISTENER* playerListener)
 void World::ApplySoundEffects(const X3DAUDIO_LISTENER* playerListener)
 {
 	// Apply 3D effect to music box sound.
-	musicBoxAudio->GetSourceVoice()->GetVoiceDetails(&details);
-	audioEmitter.ChannelCount = details.InputChannels;
 	XACore::GetInstance()->Apply3D(musicBoxAudio->GetSourceVoice(), &audioEmitter, playerListener, X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_LPF_DIRECT);
 }
 

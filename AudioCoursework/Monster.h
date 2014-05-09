@@ -51,5 +51,4 @@ private:
 	float distanceX, distanceY; // Distance between monster and target.
 	float moveSpeed; // Move speed for the monster.
 	X3DAUDIO_EMITTER audioEmitter;
-	XAUDIO2_VOICE_DETAILS details;
 };

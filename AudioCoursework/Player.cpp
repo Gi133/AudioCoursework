@@ -60,8 +60,12 @@ void Player::ProcessTurn(const float dt, const D3DXVECTOR2 monsterPosition)
 	if (position != monsterPosition)
 	{
 		Movement();
+
 		UpdateBreathingDelay(monsterPosition);
-		Breathe(dt);
+
+		// Check if it's time to take a breath.
+		if (TimerCheck(breathingTimer, dt, breathingDelay))
+			breathingSound->Play();
 	}
 	else
 	{
@@ -84,16 +88,6 @@ void Player::Movement()
 
 	UpdateListener();
 } // End of Movement function
-
-void Player::Breathe(const float dt)
-{
-	breathingTimer += dt;
-	if (breathingTimer >= breathingDelay)
-	{
-		breathingSound->Play();
-		breathingTimer = 0.0f;
-	}
-} // End Breath function.
 
 void Player::UpdateListener()
 {

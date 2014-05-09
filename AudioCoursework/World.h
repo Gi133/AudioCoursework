@@ -1,7 +1,7 @@
 /*
 File:	World.h
-Version:	1.0
-Date: 4th May 2013.
+Version:	1.1
+Date: 9th May 2013.
 Author:	Andreas Xirotyris.
 
 Uses: Windows.h, X3DAudio, memory, XASound.hpp
@@ -12,6 +12,9 @@ While sharing many of the game object functionality, it does not inherit from it
 
 Notes:
 This class could be expanded to hold other world/level data.
+
+Change log:
+	*	Added static audio emitter (aka Music Box)
 */
 
 #pragma once
@@ -47,7 +50,6 @@ private:
 	void ApplySoundEffects(const X3DAUDIO_LISTENER* playerListener);
 
 	unique_ptr<XASound> ambientAudio, musicBoxAudio; // Ambient audio/music for the world and music box.
-	XAUDIO2_VOICE_DETAILS details;
 	X3DAUDIO_EMITTER audioEmitter;
 
 	// Music box timer variables.
